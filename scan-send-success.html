@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divy Transfert - Transfert réussi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'divy-dark': '#124556',
+                        'divy-blue': '#3194db',
+                        'divy-light': '#e3f2fd',
+                        'lime-green': '#3194db'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .success-animation {
+            animation: successScale 0.8s ease-out;
+        }
+        
+        @keyframes successScale {
+            0% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out 0.3s both;
+        }
+        
+        .fade-in-delay {
+            animation: fadeIn 0.6s ease-out 0.6s both;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(166, 230, 110, 0.3);
+        }
+        
+        .btn-secondary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            background-color: rgba(166, 230, 110, 0.1);
+        }
+        
+        .detail-row {
+            border-bottom: 1px solid #374151;
+            padding: 12px 0;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .copy-feedback {
+            animation: copyPulse 0.3s ease-out;
+        }
+        
+        @keyframes copyPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="antialiased bg-gray-900 text-white">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-end p-4 pt-12">
+            <button onclick="window.location.href='home.html'" class="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="flex-1 flex flex-col items-center justify-center px-4 py-8">
+            <!-- Icône de succès -->
+            <div class="w-20 h-20 bg-lime-green rounded-full flex items-center justify-center mb-8 success-animation">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <!-- Montant et destinataire -->
+            <div class="text-center mb-8 fade-in">
+                <div class="text-4xl font-bold mb-4" id="amount-display">
+                    150 000 XOF
+                </div>
+                <p class="text-gray-300 mb-2">Envoyé à <span id="recipient-name" class="text-white font-medium">Cameron Williamson</span></p>
+                <p class="text-gray-400 text-sm" id="recipient-email">cameron.williamson@gmail.com</p>
+            </div>
+
+            <!-- Détails de la transaction -->
+            <div class="w-full max-w-md bg-gray-800 rounded-2xl p-6 mb-8 fade-in-delay">
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">Vous avez envoyé</span>
+                    <span class="text-white font-medium" id="detail-amount">150 000 XOF</span>
+                </div>
+                
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">À</span>
+                    <span class="text-white font-medium" id="detail-recipient">Cameron Williamson</span>
+                </div>
+                
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">Email</span>
+                    <span class="text-white font-medium" id="detail-email">cameron.williamson@gmail.com</span>
+                </div>
+                
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">Date</span>
+                    <span class="text-white font-medium" id="detail-date">24 déc. 2023 • 09:46</span>
+                </div>
+                
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">ID de transaction</span>
+                    <div class="flex items-center">
+                        <span class="text-white font-medium mr-2" id="transaction-id">241220230946</span>
+                        <button onclick="copyTransactionId()" class="text-gray-400 hover:text-white transition-colors" id="copy-transaction-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="detail-row flex justify-between">
+                    <span class="text-gray-400">ID de référence</span>
+                    <div class="flex items-center">
+                        <span class="text-white font-medium mr-2" id="reference-id">C7B2XSZ2</span>
+                        <button onclick="copyReferenceId()" class="text-gray-400 hover:text-white transition-colors" id="copy-reference-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="pt-4">
+                    <span class="text-gray-400 block mb-2">Notes</span>
+                    <p class="text-white text-sm" id="transaction-notes">
+                        Paiement des salaires de fin d'année et des avantages.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="px-4 py-4">
+            <div class="max-w-md mx-auto flex space-x-4 fade-in-delay">
+                <button 
+                    onclick="downloadReceipt()"
+                    class="btn-secondary flex-1 py-4 border-2 border-lime-green text-lime-green rounded-full font-medium hover:bg-lime-green hover:bg-opacity-10 transition-colors"
+                >
+                    Télécharger le reçu
+                </button>
+                <button 
+                    onclick="shareReceipt()"
+                    class="btn-primary flex-1 py-4 bg-lime-green text-white rounded-full font-medium hover:bg-opacity-90 transition-colors"
+                >
+                    Partager le reçu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer les paramètres de l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const amount = urlParams.get('amount');
+            const contactName = urlParams.get('contact');
+            const notes = urlParams.get('notes');
+            const timestamp = urlParams.get('timestamp');
+
+            // Mettre à jour l'affichage
+            if (amount) {
+                const formattedAmount = parseInt(amount).toLocaleString('fr-FR');
+                document.getElementById('amount-display').textContent = `${formattedAmount} XOF`;
+                document.getElementById('detail-amount').textContent = `${formattedAmount} XOF`;
+            }
+
+            if (contactName) {
+                document.getElementById('recipient-name').textContent = contactName;
+                document.getElementById('detail-recipient').textContent = contactName;
+                
+                // Générer l'email
+                const email = contactName.toLowerCase().replace(' ', '.') + '@gmail.com';
+                document.getElementById('recipient-email').textContent = email;
+                document.getElementById('detail-email').textContent = email;
+            }
+
+            if (notes) {
+                document.getElementById('transaction-notes').textContent = notes;
+            }
+
+            // Générer la date et heure
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR', { 
+                day: 'numeric', 
+                month: 'short', 
+                year: 'numeric' 
+            });
+            const timeStr = now.toLocaleTimeString('fr-FR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('detail-date').textContent = `${dateStr} • ${timeStr}`;
+
+            // Générer les IDs de transaction
+            const transactionId = generateTransactionId();
+            const referenceId = generateReferenceId();
+            document.getElementById('transaction-id').textContent = transactionId;
+            document.getElementById('reference-id').textContent = referenceId;
+        });
+
+        function generateTransactionId() {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hour = now.getHours().toString().padStart(2, '0');
+            const minute = now.getMinutes().toString().padStart(2, '0');
+            return `${year}${month}${day}${hour}${minute}`;
+        }
+
+        function generateReferenceId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function copyTransactionId() {
+            const transactionId = document.getElementById('transaction-id').textContent;
+            copyToClipboard(transactionId);
+            
+            // Animation de feedback
+            const btn = document.getElementById('copy-transaction-btn');
+            btn.classList.add('copy-feedback');
+            setTimeout(() => btn.classList.remove('copy-feedback'), 300);
+            
+            showToast('ID de transaction copié !');
+        }
+
+        function copyReferenceId() {
+            const referenceId = document.getElementById('reference-id').textContent;
+            copyToClipboard(referenceId);
+            
+            // Animation de feedback
+            const btn = document.getElementById('copy-reference-btn');
+            btn.classList.add('copy-feedback');
+            setTimeout(() => btn.classList.remove('copy-feedback'), 300);
+            
+            showToast('ID de référence copié !');
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                // Fallback pour les navigateurs plus anciens
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showToast(message) {
+            // Créer un toast temporaire
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-lime-green text-white px-4 py-2 rounded-full text-sm z-50';
+            toast.textContent = message;
+            toast.style.animation = 'fadeIn 0.3s ease-out';
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        function downloadReceipt() {
+            // Simuler le téléchargement du reçu
+            showToast('Téléchargement du reçu en cours...');
+            
+            // Ici vous pourriez implémenter la génération et le téléchargement d'un PDF
+            setTimeout(() => {
+                showToast('Reçu téléchargé avec succès !');
+            }, 2000);
+        }
+
+        function shareReceipt() {
+            // Préparer les données à partager
+            const amount = document.getElementById('amount-display').textContent;
+            const recipient = document.getElementById('recipient-name').textContent;
+            const transactionId = document.getElementById('transaction-id').textContent;
+            
+            const shareText = `Transfert DivyTransfert réussi\n💰 ${amount}\n👤 Destinataire: ${recipient}\n🔗 ID: ${transactionId}`;
+            
+            if (navigator.share) {
+                // API Web Share (mobile)
+                navigator.share({
+                    title: 'Reçu DivyTransfert',
+                    text: shareText,
+                }).catch(() => {
+                    fallbackShare(shareText);
+                });
+            } else {
+                fallbackShare(shareText);
+            }
+        }
+
+        function fallbackShare(text) {
+            // Copier dans le presse-papiers comme fallback
+            copyToClipboard(text);
+            showToast('Détails du reçu copiés dans le presse-papiers !');
+        }
+
+        // Ajouter les animations CSS manquantes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { 
+                    opacity: 1; 
+                    transform: translate(-50%, 0); 
+                }
+                to { 
+                    opacity: 0; 
+                    transform: translate(-50%, 10px); 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
