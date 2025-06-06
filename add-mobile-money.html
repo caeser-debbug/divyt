@@ -117,26 +117,35 @@
                 opacity: 0.5;
             }
         }
+
+        /* Styles pour le bouton de thème */
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen">
+<body class="antialiased transition-colors duration-300 bg-gray-900 dark:bg-gray-900 text-white min-h-screen">
     <div class="min-h-screen">
         <!-- Header -->
         <div class="flex items-center justify-between p-4 pt-12">
             <!-- Bouton retour -->
-            <button onclick="goBack()" class="p-2 hover:bg-gray-800 rounded-full transition-colors">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button onclick="goBack()" class="p-2 hover:bg-gray-800 dark:hover:bg-gray-700 rounded-full transition-colors">
+                <svg class="w-6 h-6 text-white dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
             
             <!-- Titre -->
-            <h1 class="text-lg font-semibold" id="page-title">Add Mobile Money</h1>
+            <h1 class="text-lg font-semibold text-white dark:text-gray-100" id="page-title">Add Mobile Money</h1>
             
             <!-- Indicateur d'étapes -->
             <div class="flex space-x-2">
                 <div class="step w-3 h-3 rounded-full bg-white active" id="step-1"></div>
-                <div class="step w-3 h-3 rounded-full bg-gray-600" id="step-2"></div>
+                <div class="step w-3 h-3 rounded-full bg-gray-600 dark:bg-gray-500" id="step-2"></div>
             </div>
         </div>
 
@@ -183,22 +192,22 @@
         <div id="step-1-content" class="px-4 space-y-6">
             <!-- Nom du titulaire -->
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Nom du titulaire</label>
+                <label class="block text-sm font-medium text-gray-300 dark:text-gray-400 mb-2">Nom du titulaire</label>
                 <input 
                     type="text" 
                     id="holder-name"
                     placeholder="Votre nom complet"
-                    class="input-field w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+                    class="input-field w-full bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl px-4 py-3 text-white dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                     oninput="updateMobilePreview()"
                 >
             </div>
 
             <!-- Numéro de téléphone -->
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Numéro de téléphone</label>
+                <label class="block text-sm font-medium text-gray-300 dark:text-gray-400 mb-2">Numéro de téléphone</label>
                 <div class="flex space-x-3">
                     <!-- Indicatif pays -->
-                    <select class="input-field bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none" id="country-code">
+                    <select class="input-field bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl px-4 py-3 text-white dark:text-gray-100 focus:outline-none" id="country-code">
                         <option value="+227">🇳🇪 +227</option>
                         <option value="+221">🇸🇳 +221</option>
                         <option value="+223">🇲🇱 +223</option>
@@ -212,25 +221,25 @@
                         id="phone-number"
                         placeholder="XX XX XX XX"
                         maxlength="11"
-                        class="input-field flex-1 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+                        class="input-field flex-1 bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl px-4 py-3 text-white dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                         oninput="formatPhoneNumber(this); updateMobilePreview()"
                     >
                 </div>
-                <p class="text-xs text-gray-400 mt-2">Entrez votre numéro de téléphone associé à votre compte Mobile Money</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Entrez votre numéro de téléphone associé à votre compte Mobile Money</p>
             </div>
 
             <!-- Code PIN Mobile Money -->
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Code PIN Mobile Money</label>
+                <label class="block text-sm font-medium text-gray-300 dark:text-gray-400 mb-2">Code PIN Mobile Money</label>
                 <input 
                     type="password" 
                     id="mobile-pin"
                     placeholder="Votre code PIN (4-6 chiffres)"
                     maxlength="6"
-                    class="input-field w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none"
+                    class="input-field w-full bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl px-4 py-3 text-white dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                     oninput="formatPIN(this)"
                 >
-                <p class="text-xs text-gray-400 mt-2">Ce code sera utilisé pour autoriser les transactions</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Ce code sera utilisé pour autoriser les transactions</p>
             </div>
 
             <!-- Bouton Continuer -->
@@ -255,35 +264,35 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.933 8.933 0 01-2.83-.46l-5.17 1.543 1.543-5.17A8.933 8.933 0 013 12c0-4.418 3.582-8 8-8s8 3.582 8 8z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold mb-2">Code de vérification envoyé</h3>
-                <p class="text-gray-400 text-sm">
+                <h3 class="text-lg font-semibold mb-2 text-white dark:text-gray-100">Code de vérification envoyé</h3>
+                <p class="text-gray-400 dark:text-gray-500 text-sm">
                     Un code de vérification a été envoyé à votre numéro<br>
-                    <span class="font-semibold text-white" id="verification-phone">+227 XX XX XX XX</span>
+                    <span class="font-semibold text-white dark:text-gray-100" id="verification-phone">+227 XX XX XX XX</span>
                 </p>
             </div>
 
             <!-- Champs de saisie du code -->
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-4 text-center">Entrez le code de vérification</label>
+                <label class="block text-sm font-medium text-gray-300 dark:text-gray-400 mb-4 text-center">Entrez le code de vérification</label>
                 <div class="flex justify-center space-x-3 mb-6">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 0)" onkeydown="moveToPrev(this, 0)">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 1)" onkeydown="moveToPrev(this, 1)">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 2)" onkeydown="moveToPrev(this, 2)">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 3)" onkeydown="moveToPrev(this, 3)">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 4)" onkeydown="moveToPrev(this, 4)">
-                    <input type="text" maxlength="1" class="code-input bg-gray-800 border border-gray-700 rounded-xl text-white focus:outline-none" oninput="moveToNext(this, 5)" onkeydown="moveToPrev(this, 5)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 0)" onkeydown="moveToPrev(this, 0)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 1)" onkeydown="moveToPrev(this, 1)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 2)" onkeydown="moveToPrev(this, 2)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 3)" onkeydown="moveToPrev(this, 3)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 4)" onkeydown="moveToPrev(this, 4)">
+                    <input type="text" maxlength="1" class="code-input bg-gray-800 dark:bg-gray-700 border border-gray-700 dark:border-gray-600 rounded-xl text-white dark:text-gray-100 focus:outline-none" oninput="moveToNext(this, 5)" onkeydown="moveToPrev(this, 5)">
                 </div>
             </div>
 
             <!-- Timer de renvoi -->
             <div class="text-center">
-                <p class="text-gray-400 text-sm mb-4">
+                <p class="text-gray-400 dark:text-gray-500 text-sm mb-4">
                     Code non reçu ? 
                     <button id="resend-btn" onclick="resendCode()" class="text-divy-blue hover:underline" disabled>
                         Renvoyer le code
                     </button>
                 </p>
-                <p class="timer-text text-sm text-gray-500" id="timer">
+                <p class="timer-text text-sm text-gray-500 dark:text-gray-600" id="timer">
                     Renvoyer dans <span id="countdown">60</span>s
                 </p>
             </div>
@@ -300,6 +309,16 @@
                 </button>
             </div>
         </div>
+
+        <!-- Bouton de thème -->
+        <button id="theme-toggle" class="theme-toggle fixed top-4 right-16 p-2 rounded-full bg-white bg-opacity-20 backdrop-blur-sm text-white z-10">
+            <svg id="light-icon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+            </svg>
+            <svg id="dark-icon" class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+        </button>
     </div>
 
     <script>
@@ -307,6 +326,55 @@
         let currentProvider = 'orange';
         let verificationTimer;
         let countdown = 60;
+
+        // Gestion du thème - identique à add-card.html pour la synchronisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser le thème exactement comme add-card.html
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                updateBodyClasses();
+            }
+            
+            // Gestionnaire pour le bouton de thème - identique à add-card.html
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+                updateBodyClasses();
+            });
+
+            // Écouter les changements de thème depuis d'autres pages (synchronisation)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'theme') {
+                    if (e.newValue === 'dark') {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    updateBodyClasses();
+                }
+            });
+
+            // Initialiser la page
+            initializePage();
+        });
+
+        // Fonction pour mettre à jour les classes du body selon le thème - identique à add-card.html
+        function updateBodyClasses() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const body = document.body;
+            
+            if (isDark) {
+                body.className = 'antialiased transition-colors duration-300 bg-gray-900 dark:bg-gray-900 text-white min-h-screen';
+            } else {
+                body.className = 'antialiased transition-colors duration-300 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen';
+            }
+        }
 
         // Récupérer le provider depuis l'URL
         function getMobileProvider() {
@@ -539,7 +607,7 @@
         }
 
         // Initialisation de la page
-        document.addEventListener('DOMContentLoaded', function() {
+        function initializePage() {
             currentProvider = getMobileProvider();
             
             // Configuration selon le provider
@@ -572,7 +640,7 @@
             document.getElementById('holder-name').addEventListener('input', checkStep1Validity);
             document.getElementById('phone-number').addEventListener('input', checkStep1Validity);
             document.getElementById('mobile-pin').addEventListener('input', checkStep1Validity);
-        });
+        }
     </script>
 </body>
 </html>

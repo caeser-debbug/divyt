@@ -25,6 +25,10 @@
             background: linear-gradient(135deg, #3194db 0%, #8bc34a 100%);
         }
         
+        .gradient-bg-dark {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+        }
+        
         .keypad-button {
             width: 80px;
             height: 80px;
@@ -34,25 +38,51 @@
             justify-content: center;
             font-size: 24px;
             font-weight: 600;
-            color: white;
             background: transparent;
             transition: all 0.2s ease;
         }
         
-        .keypad-button:hover {
+        /* Mode clair - pavé sombre */
+        .light .keypad-button {
+            color: white;
+        }
+        
+        .light .keypad-button:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: scale(1.05);
         }
         
-        .keypad-button:active {
+        .light .keypad-button:active {
             transform: scale(0.95);
             background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .light .keypad-container {
+            background: #1f2937;
+        }
+        
+        /* Mode sombre - pavé clair */
+        .dark .keypad-button {
+            color: #1f2937;
+        }
+        
+        .dark .keypad-button:hover {
+            background: rgba(31, 41, 55, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .dark .keypad-button:active {
+            transform: scale(0.95);
+            background: rgba(31, 41, 55, 0.2);
+        }
+        
+        .dark .keypad-container {
+            background: #f3f4f6;
         }
         
         .amount-display {
             font-size: 48px;
             font-weight: 700;
-            color: #1f2937;
             animation: fadeIn 0.3s ease;
         }
         
@@ -69,31 +99,56 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(139, 195, 74, 0.4);
         }
+        
+        .dark .continue-btn:hover {
+            box-shadow: 0 8px 20px rgba(49, 148, 219, 0.4);
+        }
+        
+        .header-button {
+            transition: all 0.2s ease;
+        }
+        
+        .header-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .header-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
-<body class="gradient-bg min-h-screen">
+<body class="gradient-bg dark:gradient-bg-dark min-h-screen transition-colors duration-300">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
         <div class="flex items-center justify-between p-4 pt-12">
-            <button onclick="window.location.href='scan.html'" class="p-2 hover:bg-white hover:bg-opacity-10 rounded-full transition-colors">
-                <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button onclick="window.location.href='scan.html'" class="header-button p-2 rounded-full transition-colors">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
             </button>
-            <h1 class="text-lg font-semibold text-gray-800">Montant à envoyer</h1>
-            <div class="w-10"></div>
+            <h1 class="text-lg font-semibold text-gray-800 dark:text-white">Montant à envoyer</h1>
+            
+            <!-- Theme toggle button -->
+            <button id="theme-toggle" class="header-button p-2 rounded-full transition-colors">
+                <svg id="light-icon" class="w-5 h-5 hidden dark:block text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+                </svg>
+                <svg id="dark-icon" class="w-5 h-5 block dark:hidden text-gray-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
         </div>
 
         <!-- Zone d'affichage du montant -->
         <div class="flex-1 flex flex-col items-center justify-center px-4">
             <div class="text-center mb-8">
-                <div class="amount-display mb-4" id="amount-display">0<span class="text-3xl"> XOF</span></div>
-                <p class="text-gray-700 text-sm">Solde disponible : <span class="font-semibold">485 750 XOF</span></p>
+                <div class="amount-display mb-4 text-gray-800 dark:text-white" id="amount-display">0<span class="text-3xl"> XOF</span></div>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">Solde disponible : <span class="font-semibold">485 750 XOF</span></p>
             </div>
         </div>
 
         <!-- Clavier numérique -->
-        <div class="bg-gray-800 rounded-t-3xl px-6 py-8">
+        <div class="keypad-container rounded-t-3xl px-6 py-8 transition-colors duration-300">
             <!-- Bouton Continuer -->
             <button 
                 id="continue-btn"
@@ -136,6 +191,39 @@
     <script>
         let currentAmount = '';
         const maxAmount = 485750; // Solde disponible
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion du thème
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Ajouter la classe appropriée au body pour le CSS
+            updateThemeClass();
+            
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+                updateThemeClass();
+            });
+        });
+
+        function updateThemeClass() {
+            const body = document.body;
+            if (document.documentElement.classList.contains('dark')) {
+                body.classList.remove('light');
+                body.classList.add('dark');
+            } else {
+                body.classList.remove('dark');
+                body.classList.add('light');
+            }
+        }
 
         function addDigit(digit) {
             if (digit === '*') return; // Ignorer l'astérisque pour cette application
